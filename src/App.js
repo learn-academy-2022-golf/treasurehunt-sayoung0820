@@ -15,8 +15,20 @@ const App = () => {
     "?"
   ])
 
-  const handleGamyPlay = (index) => {
-    alert(index)
+  const [treasureLocation, setTreasureLocation] = useState(Math.floor(Math.random() * board.length))
+  const [bombLocation, setBombLocation] = useState(Math.floor(Math.random() * board.length))
+
+  const handleGamePlay = (index) => {
+    let updatedBoard = [...board]
+    if (index === treasureLocation) {
+      updatedBoard[index] = "💎"
+      setBoard(updatedBoard)
+    } else if(index === bombLocation) {
+      updatedBoard[index] = "💣"
+      setBoard(updatedBoard)
+    } else {
+      updatedBoard[index] = "🌴"
+    }
   }
 
   return (
@@ -24,14 +36,17 @@ const App = () => {
       <h1>Treasure Hunt Game</h1>
       <div className="gameboard">
       {board.map((value, index) => {
-        return <Square 
+        return (
+        <Square 
         value={value} 
         key={index} 
         index={index}
-        handleGamyPlay={handleGamyPlay}/>
-      })}
+        handleGamePlay={handleGamePlay}
+        />
+      )
+    })}
     </div>
-    </>
+   </>
   )
 }
 
